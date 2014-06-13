@@ -778,8 +778,8 @@ public class IJ1Helper extends AbstractContextual {
 		IJ.debugMode = debug;
 	}
 
-	public void handleException(Throwable e) {
-		IJ.handleException(e);;
-		
+	/** Asks ImageJ 1.x to handle the given exception. */
+	public void handleException(final Throwable e) {
+		IJ.handleException(e);
 	}
 }
