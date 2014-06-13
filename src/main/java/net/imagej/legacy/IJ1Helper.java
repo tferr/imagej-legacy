@@ -80,6 +80,7 @@ import org.scijava.MenuPath;
 import org.scijava.command.CommandInfo;
 import org.scijava.event.EventHandler;
 import org.scijava.log.LogService;
+import org.scijava.object.ObjectService;
 import org.scijava.platform.event.AppAboutEvent;
 import org.scijava.platform.event.AppOpenFilesEvent;
 import org.scijava.platform.event.AppPreferencesEvent;
@@ -107,6 +108,9 @@ public class IJ1Helper extends AbstractContextual {
 
 	/** A reference to the legacy service, just in case we need it */
 	private final DefaultLegacyService legacyService;
+
+	@Parameter
+	private ObjectService objectService;
 
 	@Parameter
 	private LogService log;
@@ -782,4 +786,25 @@ public class IJ1Helper extends AbstractContextual {
 	public void handleException(final Throwable e) {
 		IJ.handleException(e);
 	}
+
+	/**
+	 * Adds the given {@link ImageDisplay}'s linked {@link ImagePlus} to the
+	 * {@link ObjectService}'s index.
+	 */
+	public void addImageToObjectIndex(final ImageDisplay imageDisplay) {
+		final ImagePlus imp =
+			legacyService.getImageMap().registerDisplay(imageDisplay);
+		objectService.addObject(imp);
+	}
+
+	/**
+	 * Removes the given {@link ImageDisplay}'s linked {@link ImagePlus} from the
+	 * {@link ObjectService}'s index.
+	 */
+	public void removeImageFromObjectIndex(final ImageDisplay imageDisplay) {
+		final ImagePlus imp =
+			legacyService.getImageMap().lookupImagePlus(imageDisplay);
+		if (imp != null) objectService.removeObject(imp);
+	}
+
 }
