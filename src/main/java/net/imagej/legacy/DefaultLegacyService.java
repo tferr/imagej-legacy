@@ -95,8 +95,8 @@ import org.scijava.welcome.event.WelcomeEvent;
  * </p>
  * <p>
  * In this fashion, when a legacy command is executed on a {@link ImageDisplay},
- * the service transparently translates it into an {@link ij.ImagePlus}, and vice
- * versa, enabling backward compatibility with legacy commands.
+ * the service transparently translates it into an {@link ij.ImagePlus}, and
+ * vice versa, enabling backward compatibility with legacy commands.
  * </p>
  * 
  * @author Barry DeZonia
