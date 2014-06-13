@@ -415,6 +415,11 @@ public final class DefaultLegacyService extends AbstractService implements
 		}
 	}
 
+	/**
+	 * Pops up the ImageJ2 options dialog when the welcome screen is shown.
+	 * 
+	 * @param event The {@link WelcomeEvent} to handle.
+	 */
 	@EventHandler
 	protected void onEvent(final WelcomeEvent event) {
 		commandService.run(ImageJ2Options.class, true);
