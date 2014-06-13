@@ -57,8 +57,11 @@ import org.scijava.app.StatusService;
 import org.scijava.command.Command;
 import org.scijava.command.CommandInfo;
 import org.scijava.command.CommandService;
+import org.scijava.display.Display;
 import org.scijava.display.DisplayService;
 import org.scijava.display.event.DisplayActivatedEvent;
+import org.scijava.display.event.DisplayCreatedEvent;
+import org.scijava.display.event.DisplayDeletedEvent;
 import org.scijava.display.event.input.KyPressedEvent;
 import org.scijava.display.event.input.KyReleasedEvent;
 import org.scijava.event.EventHandler;
@@ -380,6 +383,20 @@ public final class DefaultLegacyService extends AbstractService implements
 	}
 
 	// -- Event handlers --
+
+	@EventHandler
+	protected void onEvent(final DisplayCreatedEvent event) {
+		final Display<?> display = event.getObject();
+		if (!(display instanceof ImageDisplay)) return;
+		ij1Helper.addImageToObjectIndex((ImageDisplay) display);
+	}
+
+	@EventHandler
+	protected void onEvent(final DisplayDeletedEvent event) {
+		final Display<?> display = event.getObject();
+		if (!(display instanceof ImageDisplay)) return;
+		ij1Helper.removeImageFromObjectIndex((ImageDisplay) display);
+	}
 
 	/**
 	 * Keeps the active legacy {@link ij.ImagePlus} in sync with the active modern
